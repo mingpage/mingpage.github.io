@@ -11,7 +11,7 @@ class Table extends React.Component {
         const formatUrl=M.formatUrl(location.href);
         M.IO.listByPage({name:"",parent_id:formatUrl.split("/")[formatUrl.split("/").length-2]}).then(d=>{
             Table.M_this.setState({
-                dataSource:d
+                dataSource:d.rows
             })
         });
     };
@@ -23,7 +23,7 @@ class Table extends React.Component {
         let name=Table.M_this.refs.name.value;
         M.IO.listByPage({name:name,parent_id:formatUrl.split("/")[formatUrl.split("/").length-2]}).then(d=>{
             Table.M_this.setState({
-                dataSource:d
+                dataSource:d.rows
             })
         });
     }

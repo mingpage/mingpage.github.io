@@ -16,8 +16,8 @@
             rownumbers:true,//使能行号列
             toolbar:"#resourceDataGridToolButton",//顶部显示的工具栏
             pagination:true,//显示分页工具栏
-            pageSize:50000,//在设置分页属性的时候初始化页面大小。
-            pageList:[50000],//在设置分页属性的时候 初始化页面大小选择列表。
+            pageSize:20,//在设置分页属性的时候初始化页面大小。
+            pageList:[10,20,30,40,50,500,5000,50000],//在设置分页属性的时候 初始化页面大小选择列表。
 //行样式
             rowStyler:function(rowIndex,rowData){
                 if(rowData.id%2==0){

@@ -541,7 +541,7 @@ class MiApiCloudClient {
         }
 
         tclient.list = function (data,skip,limit) {
-            MiApiCloudClient.begin({tableName,data,"action":"list"})
+            MiApiCloudClient.begin({tableName,data,skip,limit,"action":"list"})
             return new Promise(function (reslove, reject) {
                 tclient.tableClient.query({
                     "filter": {
@@ -555,6 +555,20 @@ class MiApiCloudClient {
             }
             )
         }
+
+        tclient.count = function (data) {
+          MiApiCloudClient.begin({tableName,data,"action":"count"})
+          return new Promise(function (reslove, reject) {
+              tclient.tableClient.count({
+                  "filter": {
+                      "where": data||{}
+                  }
+              }, function (ret, err) {
+                  reslove(ret)
+              })
+          }
+          )
+      }
         return tclient;
     }
 }

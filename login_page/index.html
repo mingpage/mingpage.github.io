@@ -65,9 +65,62 @@
 		</div>
 	
 		<script type="text/javascript">
-            eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('z 7=B y("n","p-o-j-k-i").x("7");$(C).H(g(e){3(e.E==D){$(\'#m\').f()}});$(\'#m\').f(g(){a 5=$(\'9[8="l"]\').b();a 4=$(\'9[8="u"]\').b();3(5==\'\'){2(\'w\')}6 3(4==\'\'){2(\'v\')}6{7.r({5}).h(d=>{3(d&&d.s==1){3(d[0].4==4){F c=d[0];c.A=\'n\';c.G=\'p-o-j-k-i\';M.T("Q",c);R.S=M.U+"K.J"}6{2(\'q\')}}6{2(\'q\')}})}});$(\'#I\').f(g(){a 5=$(\'9[8="l"]\').b();a 4=$(\'9[8="u"]\').b();3(5==\'\'){2(\'w\')}6 3(4==\'\'){2(\'v\')}6{7.r({5}).h(d=>{3(d.s>0){2(\'L\')}6{7.P({5,4}).h(d=>{2("t,O")}).N(d=>2("t"))}})}})',57,57,'||alert|if|paasword|username|else|mi_user|name|input|var|val|res|||click|function|then|F6AE53F3538D|5F1A|1036|login|loginInputId|A6032931027980|8B09|FF279F8E|账号或密码错误|list|length|注册成功|pwd|请输入密码|请输入您的账号|tableClient|MiApiCloudClient|const|appid|new|document|13|which|let|appkey|keypress|registInputId|html|index|账号已存在||catch|可以登陆了|add|userInfo|location|href|setAttribute|baseUrl'.split('|'),0,{}))
-
-		  
+               const mi_user=new MiApiCloudClient("A6032931027980","FF279F8E-8B09-5F1A-1036-F6AE53F3538D").tableClient("mi_user");
+			$(document).keypress(function(e) {
+				// 回车键事件  
+				if(e.which == 13) {
+					$('#loginInputId').click();
+				}
+			});
+			var open = 0;
+				//非空验证
+				$('#loginInputId').click(function() {
+					var username = $('input[name="login"]').val();
+					var paasword = $('input[name="pwd"]').val();	
+					if(username == '') {
+						alert('请输入您的账号');
+					} else if(paasword == '') {
+						alert('请输入密码');
+					}else {
+						mi_user.list({username}).then(d=>
+						   {
+								
+								if (d && d.length==1) {
+									if (d[0].paasword == paasword) {
+									let res=d[0];
+									res.appid='A6032931027980';
+									res.appkey='FF279F8E-8B09-5F1A-1036-F6AE53F3538D';
+									M.setAttribute("userInfo",res)
+									location.href=M.baseUrl+"index.html"
+									} else {
+										alert('账号或密码错误');
+									}
+								}else{
+									alert('账号或密码错误');
+								}
+						  }
+						)
+					}
+				})
+			//非空验证
+				$('#registInputId').click(function() {
+					var username = $('input[name="login"]').val();
+					var paasword = $('input[name="pwd"]').val();
+					if(username == '') {
+						alert('请输入您的账号');
+					} else if(paasword == '') {
+						alert('请输入密码');
+					}else {
+						mi_user.list({username}).then(d=>
+						   {
+								if (d.length>0) {
+									alert('账号已存在');
+								}else{
+									mi_user.add({username,paasword}).then(d=>{alert("注册成功,可以登陆了")}).catch(d=>alert("注册成功"))
+								}
+						  })
+					}
+				})
        	</script>
 
 		<script>
