@@ -21,11 +21,11 @@ const mi_resource = new MiApiCloudClient(userInfo.appid, userInfo.appkey).tableC
 
 app.begin((req, res) => {
     req.params.username = userInfo.username
-    console.log("begin:", req)
+   // console.log("begin:", req)
 })
 
 MiApiCloudClient.begin=d=>{
-    console.log(d)
+   // console.log(d)
 }
 
 
