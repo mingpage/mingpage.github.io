@@ -540,14 +540,17 @@ class MiApiCloudClient {
             )
         }
 
-        tclient.list = function (data,skip,limit) {
-            MiApiCloudClient.begin({tableName,data,skip,limit,"action":"list"})
+        tclient.list = function (data,limit,skip,order,include,includefilter) {
+            MiApiCloudClient.begin({data,limit,skip,order,include,includefilter,"action":"list"})
             return new Promise(function (reslove, reject) {
                 tclient.tableClient.query({
                     "filter": {
                         "where": data||{},
+                        "limit": limit||500000,
                         "skip": skip||0,
-                        "limit": limit||500000
+                        "order": order||"createdAt ASC",
+                        "include":include||{},
+                        "includefilter":includefilter||{}
                     }
                 }, function (ret, err) {
                     reslove(ret)

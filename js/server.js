@@ -21,12 +21,12 @@ const mi_resource = new MiApiCloudClient(userInfo.appid, userInfo.appkey).tableC
 
 app.begin((req, res) => {
     req.params.username = userInfo.username
-   // console.log("begin:", req)
+    console.log("begin:", req)
 })
 
-// MiApiCloudClient.begin=d=>{
-//     console.log(d)
-// }
+MiApiCloudClient.begin=d=>{
+    console.log(d)
+}
 
 
 
@@ -38,7 +38,7 @@ app.post("/listByPage", async function (req, res) {
     let whereCase = { parent_id: req.params.parent_id, name: { "like": req.params.name || "" }, username: userInfo.username };
 
     if(req.params.page){
-        req.params.page=req.params.page-1;
+        req.params.page=(req.params.page-1)*req.params.rows;
     }else{
         mi_resource.list(whereCase).then(d => {
             let result = { rows: d  }
@@ -47,7 +47,7 @@ app.post("/listByPage", async function (req, res) {
         return;
     }
 
-    mi_resource.list(whereCase, req.params.page, req.params.rows).then(
+    mi_resource.list(whereCase, req.params.rows, req.params.page).then(
         d => {
             mi_resource.count(whereCase).then(d1 => {
                 let result = { rows: d, total: d1.count }
